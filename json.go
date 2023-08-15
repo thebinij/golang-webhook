@@ -6,6 +6,12 @@ import (
 	"net/http"
 )
 
+func decodeJSONData(r *http.Request) (map[string]interface{}, error) {
+	var data map[string]interface{}
+	err := json.NewDecoder(r.Body).Decode(&data)
+	return data, err
+}
+
 func responseWithError(w http.ResponseWriter, code int, msg string) {
 	if code > 499 {
 		log.Println("Responding with 5XX errors:", msg)
